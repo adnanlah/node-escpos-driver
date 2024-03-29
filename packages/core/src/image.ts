@@ -1,4 +1,5 @@
 import getPixels from "get-pixels";
+import { getPixels as getPixelsN } from "ndarray-pixels"
 import type { NdArray } from "ndarray";
 
 export type ImageMimeType = "image/png" | "image/jpg" | "image/jpeg" | "image/gif" | "image/bmp";
@@ -124,5 +125,16 @@ export default class Image {
         }
       });
     });
+  }
+
+  /**
+   * Load image from Data
+   * @param  {[Uint8Array]}   data      [description]
+   * @param  {[string]}   type     [description]
+   * @return {[Promise<Image>]}            [description]
+   */
+  static async loadData(data: Uint8Array, type: string): Promise<Image> {
+    const pixels = await getPixelsN(data, type)
+    return new Image(pixels)
   }
 }
